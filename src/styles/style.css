@@ -1,0 +1,89 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+}
+
+
+body {
+    background-color: #3ddc97;
+    height: 100%;
+}
+
+#root {
+    height: 100%;
+}
+
+.App {
+    height: 100%;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+main {
+    flex: 1;
+}
+
+footer {
+    background-color: #fff;
+    text-align: center;
+    padding: 5px;
+}
+
+.hide {
+    display: none !important;
+}
+
+
+/* Login Page */
+.login-section {
+    margin: 100px auto;
+    width: 600px;
+    padding: 10px;
+}
+
+/* Page Admin Sarpras */
+.dashboard-page,
+.manajemen-akun-page,
+.manajemen-kategori-page,
+.manajemen-barang-page,
+.manajemen-jurusan-page,
+.pengadaan-barang-page,
+.pendistribusian-barang-page,
+.total-inventaris-page,
+.riwayat-pengadaan-page {
+    padding: 20px;
+    background-color: rgba(47, 169, 124, 0.1);
+}
+
+@media only screen and (max-width: 510px) {
+    .login-section {
+        margin: 100px auto;
+        width: 350px;
+        padding: 10px;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    .sidebar {
+        position: fixed;
+        z-index: 2;
+    }
+
+    .btn-side {
+        display: flex !important;
+    }
+
+    .hidden-none {
+        display: none !important;
+    }
+
+}
