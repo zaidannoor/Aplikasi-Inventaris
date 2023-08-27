@@ -49,7 +49,6 @@ function ManajemenJurusanPage() {
           return data;
         });
         const total = data.length;
-        console.log(total);
 
         const table1 = data.splice(0, Math.ceil(total / 2));
         setTable1(() => {
@@ -57,8 +56,7 @@ function ManajemenJurusanPage() {
         });
 
         setInitializing(false);
-        console.log(data);
-        console.log(workunits);
+
       }
     });
   }, [getWorkunits]);
@@ -82,7 +80,6 @@ function ManajemenJurusanPage() {
       const id = e.target.id;
       const code = formValues[0];
       const name = formValues[1];
-      console.log(code);
       const { error, feedback } = await updateWorkUnit({
         id,
         code,

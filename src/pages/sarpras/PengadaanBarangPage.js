@@ -56,8 +56,7 @@ function PengadaanBarangPage() {
         });
 
         setLoad(false);
-        console.log(data);
-        console.log(types);
+
       }
     });
   }, [getTypes]);
@@ -76,8 +75,6 @@ function PengadaanBarangPage() {
             return data;
           });
 
-          console.log(data);
-          console.log(items);
         }
       });
     },
@@ -134,7 +131,7 @@ function PengadaanBarangPage() {
                 </option>
                 {types.map((t) => (
                   <option key={t.id} value={t.id}>
-                    {t.name}
+                    {t.code} - {t.name}
                   </option>
                 ))}
               </select>
@@ -157,7 +154,7 @@ function PengadaanBarangPage() {
                 </option>
                 {items.map((i) => (
                   <option key={i.id} value={i.id}>
-                    {i.name}
+                    {i.code} - {i.name}
                   </option>
                 ))}
               </select>

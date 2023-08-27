@@ -22,8 +22,6 @@ function RiwayatPengadaanPage() {
         });
 
         setInitializing(false);
-        console.log(data);
-        console.log(history);
       }
     });
   }, [procurementHistory]);

@@ -140,9 +140,9 @@ function PendistribusianBarangPage() {
                 <option value="" hidden>
                   Pilih Barang
                 </option>
-                {unassignedItem.map((u) => (
-                  <option key={u.code} value={u.id_name_item}>
-                    {u.name}
+                {unassignedItem.map((u, i =0) => (
+                  <option key={++i} value={u.id_name_item}>
+                    {u.code} - {u.name}
                   </option>
                 ))}
               </select>
@@ -154,7 +154,7 @@ function PendistribusianBarangPage() {
                 </option>
                 {workunits.map((w) => (
                   <option key={w.id} value={w.id}>
-                    {w.name}
+                    {w.code} - {w.name}
                   </option>
                 ))}
               </select>

@@ -1,4 +1,4 @@
-const BASE_URL = "http://34.101.86.121/api";
+const BASE_URL = "http://34.128.73.239/api";
 
 function getAccessToken() {
   return localStorage.getItem("accessToken");
@@ -43,7 +43,7 @@ async function getWorkunits() {
     },
   });
   const responseJson = await response.json();
-  console.log(responseJson);
+
   if (responseJson.status !== "success") {
     return { error: responseJson.error, feedback: null };
   }
@@ -61,7 +61,7 @@ async function addWorkUnit({ code, name }) {
   });
 
   const responseJson = await response.json();
-  console.log(responseJson);
+
   if (responseJson.status !== "success") {
     return { error: responseJson.message, feedback: null };
   }
@@ -79,7 +79,6 @@ async function updateWorkUnit({ id, code, name }) {
   });
   const responseJson = await response.json();
 
-  console.log(responseJson);
   if (responseJson.status !== "success") {
     return { error: responseJson.message, data: null };
   }
@@ -95,7 +94,7 @@ async function getUsers() {
   });
 
   const responseJson = await response.json();
-  console.log(responseJson);
+
   if (responseJson.status !== "success") {
     return { error: responseJson.message, feedback: null };
   }
@@ -113,7 +112,7 @@ async function addUser({ username, id_work_unit }) {
   });
 
   const responseJson = await response.json();
-  console.log(responseJson);
+
   if (responseJson.status !== "success") {
     return { error: responseJson.message, feedback: null };
   }
@@ -129,7 +128,7 @@ async function getTypes() {
   });
 
   const responseJson = await response.json();
-  console.log(responseJson);
+
   if (responseJson.status !== "success") {
     return { error: responseJson.message, feedback: null };
   }
@@ -147,7 +146,7 @@ async function addType({ code, name }) {
   });
 
   const responseJson = await response.json();
-  console.log(responseJson);
+
   if (responseJson.status !== "success") {
     return { error: responseJson.message, feedback: null };
   }
@@ -165,7 +164,6 @@ async function updateType({ id, code, name }) {
   });
   const responseJson = await response.json();
 
-  console.log(responseJson);
   if (responseJson.status !== "success") {
     return { error: responseJson.message, data: null };
   }
@@ -184,7 +182,7 @@ async function getItems({ id_type }) {
   );
 
   const responseJson = await response.json();
-  console.log(responseJson);
+
   if (responseJson.status !== "success") {
     return { error: responseJson.message, feedback: null };
   }
@@ -202,7 +200,7 @@ async function addItem({ id_type, code, name }) {
   });
 
   const responseJson = await response.json();
-  console.log(responseJson);
+
   if (responseJson.status !== "success") {
     return { error: responseJson.message, feedback: null };
   }
@@ -223,7 +221,6 @@ async function updateItem({ id, code, name }) {
   });
   const responseJson = await response.json();
 
-  console.log(responseJson);
   if (responseJson.status !== "success") {
     return { error: responseJson.message, data: null };
   }
@@ -246,7 +243,7 @@ async function procurement({
   });
 
   const responseJson = await response.json();
-  console.log(responseJson);
+
   if (responseJson.status !== "success") {
     return { error: responseJson.message, feedback: null };
   }
@@ -262,7 +259,7 @@ async function procurementHistory() {
   });
 
   const responseJson = await response.json();
-  console.log(responseJson);
+
   if (responseJson.status !== "success") {
     return { error: responseJson.message, feedback: null };
   }
@@ -278,7 +275,7 @@ async function getInventories() {
   });
 
   const responseJson = await response.json();
-  console.log(responseJson);
+
   if (responseJson.status !== "success") {
     return { error: responseJson.message, feedback: null };
   }
@@ -294,7 +291,7 @@ async function getUnassignedItem() {
   });
 
   const responseJson = await response.json();
-  console.log(responseJson);
+
   if (responseJson.status !== "success") {
     return { error: responseJson.message, feedback: null };
   }
@@ -312,7 +309,7 @@ async function addItemToWorkUnit({ id_name_item, id_work_unit, quantity }) {
   });
 
   const responseJson = await response.json();
-  console.log(responseJson);
+
   if (responseJson.status !== "success") {
     return { error: responseJson.message, feedback: null };
   }
@@ -339,5 +336,5 @@ export {
   procurementHistory,
   getInventories,
   getUnassignedItem,
-  addItemToWorkUnit
+  addItemToWorkUnit,
 };

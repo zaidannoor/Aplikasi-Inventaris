@@ -19,8 +19,6 @@ function ManajemenAkunPage({
     event.preventDefault();
     setLoad(true);
 
-    console.log(username);
-    console.log(id_work_unit);
     const { error, data } = await addUser({ username, id_work_unit });
     if (error) {
       Swal.fire({
@@ -52,8 +50,6 @@ function ManajemenAkunPage({
           return data;
         });
         
-        console.log(data);
-        console.log(workunits);
       }
     });
   }, [getWorkunits]);
@@ -70,8 +66,6 @@ function ManajemenAkunPage({
         setUsers(() => {
           return data;
         });
-        console.log(data);
-        console.log(users);
       }
     });
   }, [getWorkunits]);
@@ -128,7 +122,6 @@ function ManajemenAkunPage({
             </tr>
           </thead>
           <tbody className="text-center">
-            {console.log(users)}
             {users.map((u,i=1) => (
               <tr key={++i}>
                 <th scope="row">{++i}</th>
@@ -165,7 +158,7 @@ function ManajemenAkunPage({
                 <option value="">Pilih unit kerja</option>
                 {workunits.map((w) => (
                   <option key={w.id} value={w.id}>
-                    {w.name}
+                    {w.code} - {w.name}
                   </option>
                 ))}
               </select>

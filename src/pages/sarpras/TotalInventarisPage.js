@@ -20,8 +20,6 @@ function TotalInventarisPage() {
         });
 
         setInitializing(false);
-        console.log(data);
-        console.log(inventories);
       }
     });
   }, [getInventories]);

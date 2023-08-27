@@ -18,8 +18,6 @@ function ManajemenBarangPage() {
     event.preventDefault();
     setLoad(true);
 
-    console.log(code);
-    console.log(name);
     const { error, feedback } = await addItem({ id_type, code, name });
     if (error) {
       Swal.fire({
@@ -51,8 +49,6 @@ function ManajemenBarangPage() {
           return data;
         });
 
-        console.log(data);
-        console.log(kategori);
       }
     });
   }, [getTypes]);
@@ -72,15 +68,12 @@ function ManajemenBarangPage() {
           });
 
           const total = data.length;
-          console.log(total);
 
           const table1 = data.splice(0, Math.ceil(total / 2));
           setTable1(() => {
             return table1;
           });
 
-          console.log(data);
-          console.log(item);
         }
       });
     },
@@ -106,7 +99,6 @@ function ManajemenBarangPage() {
       const id = e.target.id;
       const code = formValues[0];
       const name = formValues[1];
-      console.log(id);
       const { error, feedback } = await updateItem({
         id,
         code,
@@ -167,7 +159,7 @@ function ManajemenBarangPage() {
     <section className="manajemen-barang-page p-3">
       <h1 className="text-center">Manajemen Barang</h1>
 
-      <div className="barang-list card mt-3">
+      <div className="barang-list card mt-3 p-3">
         <h2 className="p-3">List Barang</h2>
         <div className="mx-3 p-3">
           <select
@@ -178,15 +170,15 @@ function ManajemenBarangPage() {
             <option value="1">Pilih Kategori Barang</option>
             {kategori.map((k) => (
               <option key={k.id} value={k.id}>
-                {k.name}
+                {k.code} - {k.name}
               </option>
             ))}
           </select>
         </div>
 
         <div className="kategori-table d-flex justify-content-evenly mt-2">
-          <div className="mx-2">
-            <table className="table border border-black text-center mx-3">
+          <div className="">
+            <table className="table border border-black text-center">
               <thead>
                 <tr>
                   <th scope="col">Kode Barang</th>
@@ -211,7 +203,7 @@ function ManajemenBarangPage() {
           </div>
 
           <div className="mx-2">
-            <table className="table border border-black mx-3 text-center">
+            <table className="table border border-black text-center">
               <thead>
                 <tr>
                   <th scope="col">Kode Barang</th>
@@ -263,10 +255,10 @@ function ManajemenBarangPage() {
             </div>
             <div className="col">
               <select className="form-select" onChange={onIdTypeChange}>
-                <option value="">Pilih unit kerja</option>
+                <option value="">Pilih Kategori</option>
                 {kategori.map((k) => (
                   <option key={k.id} value={k.id}>
-                    {k.name}
+                    {k.code} - {k.name}
                   </option>
                 ))}
               </select>

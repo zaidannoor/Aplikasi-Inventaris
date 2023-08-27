@@ -15,8 +15,6 @@ function ManajemenKategoriPage() {
     event.preventDefault();
     setInitializing(true);
 
-    console.log(code);
-    console.log(name);
     const { error, feedback } = await addType({ code, name });
     if (error) {
       Swal.fire({
@@ -48,17 +46,14 @@ function ManajemenKategoriPage() {
           return data;
         });
         const total = data.length;
-        console.log(total);
 
         const table1 = data.splice(0, Math.ceil(total / 2));
         setTable1(() => {
           return table1;
         });
-        console.log(table1);
 
         setInitializing(false);
-        console.log(data);
-        console.log(types);
+
       }
     });
   }, [getTypes]);
@@ -128,7 +123,7 @@ function ManajemenKategoriPage() {
         <h2 className="p-3">List Kategori</h2>
         <div className="kategori-table d-flex justify-content-evenly">
           <div className="">
-            <table className="table border border-black text-center mx-3">
+            <table className="table border border-black text-center">
               <thead>
                 <tr>
                   <th scope="col">Kode Barang</th>
@@ -156,8 +151,8 @@ function ManajemenKategoriPage() {
             </table>
           </div>
 
-          <div className="">
-            <table className="table border border-black mx-3 text-center">
+          <div className="mx-2">
+            <table className="table border border-black text-center">
               <thead>
                 <tr>
                   <th scope="col">Kode Barang</th>
