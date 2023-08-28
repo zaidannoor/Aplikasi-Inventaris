@@ -161,7 +161,7 @@ function App() {
             </Routes>
           )}
         </main>
-        <footer>C23-69 Zaidan Noor Irfan X Rio Bintang X MELANIODARIS</footer>
+        <footer>Aplikasi Inventaris 2023</footer>
       </div>
     </div>
   );
