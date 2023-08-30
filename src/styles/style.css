@@ -59,7 +59,9 @@ footer {
 .pengadaan-barang-page,
 .pendistribusian-barang-page,
 .total-inventaris-page,
-.riwayat-pengadaan-page {
+.riwayat-pengadaan-page,
+.manajemen-ruangan-page,
+.manajemen-kondisi-barang-page {
     padding: 20px;
     background-color: rgba(47, 169, 124, 0.1);
 }
