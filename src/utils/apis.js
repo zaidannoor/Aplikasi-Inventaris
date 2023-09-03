@@ -36,6 +36,21 @@ async function login({ username, password }) {
   return { error: false, data: responseJson.data };
 }
 
+async function resetPassword({ id }) {
+  const response = await fetchWithToken(`${BASE_URL}/users/reset/${id}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const responseJson = await response.json();
+  if (responseJson.status !== "success") {
+    return { error: responseJson.message, data: null };
+  }
+
+  return { error: false, data: responseJson.data };
+}
+
 async function getWorkunits() {
   const response = await fetchWithToken(`${BASE_URL}/workunits`, {
     headers: {
@@ -371,6 +386,7 @@ export {
   getAccessToken,
   putAccessToken,
   login,
+  resetPassword,
   getWorkunits,
   addWorkUnit,
   updateWorkUnit,

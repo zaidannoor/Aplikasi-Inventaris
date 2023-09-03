@@ -27,7 +27,7 @@ import Sidebar from "./components/navigation/Sidebar";
 
 function App() {
   const [authedUser, setAuthedUser] = useState(
-    localStorage.getItem("auth") || null
+    JSON.parse(localStorage.getItem("auth")) || null
   );
   const [initializing, setInitializing] = useState(false);
   const [hiddenBar, setHiddenBar] = useState(false);

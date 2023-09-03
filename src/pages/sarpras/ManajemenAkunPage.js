@@ -1,14 +1,16 @@
 import React, { useCallback, useState, useEffect } from "react";
-import { FaPlus, FaAngleDown } from "react-icons/fa";
-import { getWorkunits, getUsers, addUser } from "../../utils/apis";
+import { FaAngleDown } from "react-icons/fa";
+import {
+  getWorkunits,
+  getUsers,
+  addUser,
+  resetPassword,
+} from "../../utils/apis";
 import loading from "../../images/loading.gif";
 import State from "../../hooks/State";
 import Swal from "sweetalert2";
 
-function ManajemenAkunPage({
-  hideAdminList,
-  toggleHideAdminList,
-}) {
+function ManajemenAkunPage({ hideAdminList, toggleHideAdminList }) {
   const [load, setLoad] = useState(false);
   const [workunits, setWorkunits] = useState(null); // array of object type
   const [users, setUsers] = useState(null); // array of object type
@@ -30,7 +32,30 @@ function ManajemenAkunPage({
       Swal.fire({
         icon: "success",
         title: "Success",
-        text: 'Your Password is ' + data.password,
+        text: "Your Password is " + data.password,
+      });
+      getAllUsers();
+    }
+    setLoad(false);
+  }
+
+  async function onReset(event) {
+    event.preventDefault();
+    setLoad(true);
+    const id = event.target.id
+    const { error, data } = await resetPassword({ id });
+    console.log(data)
+    if (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: error,
+      });
+    } else {
+      Swal.fire({
+        icon: "success",
+        title: "Success",
+        text: 'Your New Password is ' + data.password,
       });
       getAllUsers()
     }
@@ -49,7 +74,6 @@ function ManajemenAkunPage({
         setWorkunits(() => {
           return data;
         });
-        
       }
     });
   }, [getWorkunits]);
@@ -86,7 +110,7 @@ function ManajemenAkunPage({
     );
   }
 
-  if(load){
+  if (load) {
     return (
       <img
         className="position-absolute top-50 start-50 translate-middle"
@@ -122,20 +146,23 @@ function ManajemenAkunPage({
             </tr>
           </thead>
           <tbody className="text-center">
-            {users.map((u,i=1) => (
+            {users.map((u, i = 1) => (
               <tr key={++i}>
                 <th scope="row">{++i}</th>
                 <td>{u.username}</td>
                 <td>{u.work_unit}</td>
                 <td>
-                  <button className="btn btn-warning mx-3">
+                  <button
+                    className="btn btn-warning mx-3"
+                    id={u.uuid}
+                    onClick={onReset}
+                  >
                     Reset Password
                   </button>
                   <button className="btn btn-danger">Delete</button>
                 </td>
               </tr>
             ))}
-            
           </tbody>
         </table>
       </div>
