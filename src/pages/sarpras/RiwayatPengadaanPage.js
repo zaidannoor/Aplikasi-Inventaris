@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from "react";
 import { procurementHistory } from "../../utils/apis";
 import loading from "../../images/loading.gif";
 import moment from "moment/moment";
-
+import Swal from "sweetalert2";
 
 function RiwayatPengadaanPage() {
   const [initializing, setInitializing] = useState(true);

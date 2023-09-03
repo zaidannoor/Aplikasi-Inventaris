@@ -16,8 +16,9 @@ import PendistribusianBarangPage from "./pages/sarpras/PendistribusianBarangPage
 import RiwayatPengadaanPage from "./pages/sarpras/RiwayatPengadaanPage";
 import TotalInventarisPage from "./pages/sarpras/TotalInventarisPage";
 import ManajemenRuaganPage from "./pages/jurusan/ManajemenRuaganPage";
+import DistribusiJurusanPage from "./pages/jurusan/DistribusiJurusanPage";
 import ManajemenKondisiBarangPage from "./pages/jurusan/ManajemenKondisiBarangPage";
-
+import InventarisJurusanPage from "./pages/jurusan/InventarisJurusanPage";
 import NotFoundPage from "./pages/NotFoundPage";
 
 // component
@@ -34,17 +35,13 @@ function App() {
   const [hideAdminRole, setHideAdminRole] = useState(false);
   const navigate = useNavigate();
 
-  async function onLoginSuccess({
-    accessToken,
-    fullName = "zaidan",
-    role = "admin",
-  }) {
+  async function onLoginSuccess({ accessToken, user, workUnit }) {
     setInitializing(true);
     putAccessToken(accessToken);
     setAuthedUser(() => {
-      return { fullName, role };
+      return { user, workUnit };
     });
-    localStorage.setItem("auth", JSON.stringify({ fullName, role }));
+    localStorage.setItem("auth", JSON.stringify({ user, workUnit }));
     setInitializing(false);
   }
 
@@ -82,7 +79,7 @@ function App() {
     <div className="App d-flex">
       {authedUser ? (
         <aside>
-          <Sidebar hidden={hiddenBar} toggleHidden={toggleHiddenBar} />
+          <Sidebar auth={authedUser} hidden={hiddenBar} toggleHidden={toggleHiddenBar} />
         </aside>
       ) : (
         ""
@@ -104,58 +101,86 @@ function App() {
 
         <main style={{ backgroundColor: authedUser ? "#f4f8f9" : "#3ddc97" }}>
           {authedUser ? (
-            <Routes>
-              <Route path="/" element={<DashboardPage />} />
-              <Route path="/home" element={<DashboardPage />} />
-              <Route
-                path="/manajemen_akun"
-                element={
-                  <ManajemenAkunPage
-                    hideAdminList={hideAdminList}
-                    toggleHideAdminList={toggleHideAdminList}
-                    hideAdminRole={hideAdminRole}
-                    toggleHideAdminRole={toggleHideAdminRole}
-                  />
-                }
-              />
-              <Route
-                path="/manajemen_kategori"
-                element={<ManajemenKategoriPage />}
-              />
-              <Route
-                path="/manajemen_barang"
-                element={<ManajemenBarangPage />}
-              />
-              <Route
-                path="/manajemen_jurusan"
-                element={<ManajemenJurusanPage />}
-              />
-              <Route
-                path="/pengadaan_barang"
-                element={<PengadaanBarangPage />}
-              />
-              <Route
-                path="/pendistribusian_barang"
-                element={<PendistribusianBarangPage />}
-              />
-              <Route
-                path="/riwayat_pengadaan"
-                element={<RiwayatPengadaanPage />}
-              />
-              <Route
-                path="/total_inventaris"
-                element={<TotalInventarisPage />}
-              />
-              <Route
-                path="/manajemen_ruangan"
-                element={<ManajemenRuaganPage />}
-              />
-              <Route
-                path="/manajemen_kondisi_barang"
-                element={<ManajemenKondisiBarangPage />}
-              />
-              <Route path="*" element={<NotFoundPage logout={onLogout} />} />
-            </Routes>
+            authedUser.user == "admin sarana prasarana" ? (
+              <Routes>
+                <Route path="/" element={<DashboardPage />} />
+                <Route path="/home" element={<DashboardPage />} />
+                <Route
+                  path="/manajemen_akun"
+                  element={
+                    <ManajemenAkunPage
+                      hideAdminList={hideAdminList}
+                      toggleHideAdminList={toggleHideAdminList}
+                      hideAdminRole={hideAdminRole}
+                      toggleHideAdminRole={toggleHideAdminRole}
+                    />
+                  }
+                />
+                <Route
+                  path="/manajemen_kategori"
+                  element={<ManajemenKategoriPage />}
+                />
+                <Route
+                  path="/manajemen_barang"
+                  element={<ManajemenBarangPage />}
+                />
+                <Route
+                  path="/manajemen_jurusan"
+                  element={<ManajemenJurusanPage />}
+                />
+                <Route
+                  path="/pengadaan_barang"
+                  element={<PengadaanBarangPage />}
+                />
+                <Route
+                  path="/pendistribusian_barang"
+                  element={<PendistribusianBarangPage />}
+                />
+                <Route
+                  path="/riwayat_pengadaan"
+                  element={<RiwayatPengadaanPage />}
+                />
+                <Route
+                  path="/total_inventaris"
+                  element={<TotalInventarisPage />}
+                />
+                <Route
+                  path="/manajemen_ruangan"
+                  element={<ManajemenRuaganPage />}
+                />
+                <Route
+                  path="/manajemen_kondisi_barang"
+                  element={<ManajemenKondisiBarangPage />}
+                />
+                <Route
+                  path="/inventaris_jurusan"
+                  element={<InventarisJurusanPage />}
+                />
+                <Route path="*" element={<NotFoundPage logout={onLogout} />} />
+              </Routes>
+            ) : (
+              <Routes>
+                <Route path="/" element={<DashboardPage />} />
+                <Route path="/home" element={<DashboardPage />} />
+                <Route
+                  path="/manajemen_ruangan"
+                  element={<ManajemenRuaganPage />}
+                />
+                <Route
+                  path="/manajemen_kondisi_barang"
+                  element={<ManajemenKondisiBarangPage />}
+                />
+                <Route
+                  path="/inventaris_jurusan"
+                  element={<InventarisJurusanPage />}
+                />
+                <Route
+                  path="/distribusi_jurusan"
+                  element={<DistribusiJurusanPage />}
+                />
+                <Route path="*" element={<NotFoundPage logout={onLogout} />} />
+              </Routes>
+            )
           ) : (
             <Routes>
               <Route

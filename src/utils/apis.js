@@ -1,4 +1,4 @@
-const BASE_URL = "http://34.128.73.239/api";
+const BASE_URL = "https://34.128.73.239.sslip.io/api";
 
 function getAccessToken() {
   return localStorage.getItem("accessToken");
@@ -45,7 +45,7 @@ async function getWorkunits() {
   const responseJson = await response.json();
 
   if (responseJson.status !== "success") {
-    return { error: responseJson.error, feedback: null };
+    return { error: responseJson.message, feedback: null };
   }
 
   return { error: false, data: responseJson.data };
@@ -317,6 +317,56 @@ async function addItemToWorkUnit({ id_name_item, id_work_unit, quantity }) {
   return { error: false, feedback: responseJson.message };
 }
 
+async function getRooms() {
+  const response = await fetchWithToken(`${BASE_URL}/rooms`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const responseJson = await response.json();
+  console.log(responseJson)
+  if (responseJson.status !== "success") {
+    return { error: responseJson.message, feedback: null };
+  }
+
+  return { error: false, data: responseJson.data };
+}
+
+async function addRoom({ name}) {
+  const response = await fetchWithToken(`${BASE_URL}/rooms`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ name}),
+  });
+
+  const responseJson = await response.json();
+
+  if (responseJson.status !== "success") {
+    return { error: responseJson.message, feedback: null };
+  }
+
+  return { error: false, feedback: responseJson.message };
+}
+
+async function getUnassignedRoom() {
+  const response = await fetchWithToken(`${BASE_URL}/inventories`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const responseJson = await response.json();
+
+  if (responseJson.status !== "success") {
+    return { error: responseJson.message, feedback: null };
+  }
+
+  return { error: false, data: responseJson.data };
+}
+
 export {
   getAccessToken,
   putAccessToken,
@@ -337,4 +387,7 @@ export {
   getInventories,
   getUnassignedItem,
   addItemToWorkUnit,
+  getRooms,
+  addRoom,
+  getUnassignedRoom
 };

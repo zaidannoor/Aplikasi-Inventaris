@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { getInventories } from "../../utils/apis";
 import loading from "../../images/loading.gif";
+import Swal from "sweetalert2";
 
 function TotalInventarisPage() {
   const [initializing, setInitializing] = useState(true);
