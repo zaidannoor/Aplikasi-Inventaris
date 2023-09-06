@@ -55,7 +55,7 @@ function ManajemenAkunPage({ hideAdminList, toggleHideAdminList }) {
       Swal.fire({
         icon: "success",
         title: "Success",
-        text: 'Your New Password is ' + data.password,
+        text: 'Password Baru Anda adalah ' + data.password,
       });
       getAllUsers()
     }

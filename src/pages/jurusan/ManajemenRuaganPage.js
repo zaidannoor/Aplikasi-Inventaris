@@ -11,6 +11,7 @@ function ManajemenRuaganPage() {
   const [rooms, setRoom] = useState(null); // array of object type
   const [dataTable1, setTable1] = useState(null);
   const [name, setName] = State("");
+  const [code, setCode] = State("");
 
   async function onSubmitHandler(event) {
     event.preventDefault();
@@ -139,9 +140,11 @@ function ManajemenRuaganPage() {
           <div className="row">
             <div className="col">
               <input
-                type="number"
+                type="text"
                 className="form-control"
                 placeholder="Kode Ruangan"
+                value={code}
+                onChange={setCode}
               />
             </div>
             <div className="col">

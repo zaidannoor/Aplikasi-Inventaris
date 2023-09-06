@@ -6,6 +6,7 @@ import {
 } from "../../utils/apis";
 import loading from "../../images/loading.gif";
 import State from "../../hooks/State";
+import moment from "moment/moment";
 import Swal from "sweetalert2";
 
 function PendistribusianBarangPage() {
@@ -13,7 +14,7 @@ function PendistribusianBarangPage() {
   const [unassignedItem, setUnassignedItem] = useState(null);
   const [workunits, setWorkunits] = useState(null);
 
-  const [id_name_item, setIdItem] = State("");
+  const [id_added_item, setIdAddedItem] = State("");
   const [id_work_unit, setUnit] = State("");
   const [quantity, setQuantity] = State("");
 
@@ -22,7 +23,7 @@ function PendistribusianBarangPage() {
     setLoad(true);
 
     const { error, feedback } = await addItemToWorkUnit({
-      id_name_item,
+      id_added_item,
       id_work_unit,
       quantity,
     });
@@ -38,7 +39,7 @@ function PendistribusianBarangPage() {
         title: "Success",
         text: feedback,
       });
-      getAllUnassignedItem()
+      getAllUnassignedItem();
     }
     setLoad(false);
   }
@@ -55,7 +56,6 @@ function PendistribusianBarangPage() {
         setWorkunits(() => {
           return data;
         });
-
       }
     });
   }, [getWorkunits]);
@@ -72,6 +72,7 @@ function PendistribusianBarangPage() {
         setUnassignedItem(() => {
           return data;
         });
+        console.log(data);
       }
     });
   }, [getUnassignedItem]);
@@ -115,6 +116,7 @@ function PendistribusianBarangPage() {
               <tr>
                 <th scope="col">No</th>
                 <th scope="col">Nama Barang</th>
+                <th scope="col">Tahun</th>
                 <th scope="col">Jumlah</th>
               </tr>
             </thead>
@@ -123,7 +125,9 @@ function PendistribusianBarangPage() {
                 <tr key={++i}>
                   <th scope="row">{++i}</th>
                   <td>{item.name}</td>
-                  <td>{item.qty}</td>
+                  <td>{moment(item.date).format("YYYY")}</td>
+
+                  <td>{item.total}</td>
                 </tr>
               ))}
             </tbody>
@@ -136,13 +140,13 @@ function PendistribusianBarangPage() {
         <form className="p-3" onSubmit={onSubmitHandler}>
           <div className="row">
             <div className="col">
-              <select className="form-select" onChange={setIdItem}>
+              <select className="form-select" onChange={setIdAddedItem}>
                 <option value="" hidden>
                   Pilih Barang
                 </option>
-                {unassignedItem.map((u, i =0) => (
-                  <option key={++i} value={u.id_name_item}>
-                    {u.code} - {u.name}
+                {unassignedItem.map((u, i = 0) => (
+                  <option key={++i} value={u.id}>
+                    {u.name} - {moment(u.date).format("YYYY")}
                   </option>
                 ))}
               </select>

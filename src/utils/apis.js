@@ -299,7 +299,7 @@ async function getInventories() {
 }
 
 async function getUnassignedItem() {
-  const response = await fetchWithToken(`${BASE_URL}/inventories/notassigned`, {
+  const response = await fetchWithToken(`${BASE_URL}/addeditems/distribution`, {
     headers: {
       "Content-Type": "application/json",
     },
@@ -314,13 +314,13 @@ async function getUnassignedItem() {
   return { error: false, data: responseJson.data };
 }
 
-async function addItemToWorkUnit({ id_name_item, id_work_unit, quantity }) {
+async function addItemToWorkUnit({ id_added_item, id_work_unit, quantity }) {
   const response = await fetchWithToken(`${BASE_URL}/inventories`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ id_name_item, id_work_unit, quantity }),
+    body: JSON.stringify({ id_added_item, id_work_unit, quantity }),
   });
 
   const responseJson = await response.json();
@@ -340,7 +340,7 @@ async function getRooms() {
   });
 
   const responseJson = await response.json();
-  console.log(responseJson)
+  console.log(responseJson);
   if (responseJson.status !== "success") {
     return { error: responseJson.message, feedback: null };
   }
@@ -348,13 +348,13 @@ async function getRooms() {
   return { error: false, data: responseJson.data };
 }
 
-async function addRoom({ name}) {
+async function addRoom({ name }) {
   const response = await fetchWithToken(`${BASE_URL}/rooms`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ name}),
+    body: JSON.stringify({ name }),
   });
 
   const responseJson = await response.json();
@@ -405,5 +405,5 @@ export {
   addItemToWorkUnit,
   getRooms,
   addRoom,
-  getUnassignedRoom
+  getUnassignedRoom,
 };

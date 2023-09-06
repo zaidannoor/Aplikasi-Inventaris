@@ -61,7 +61,7 @@ function DistribusiJurusanPage() {
                 <tr key={++i}>
                   <th scope="row">{++i}</th>
                   <td>{item.name}</td>
-                  <td>{item.qty}</td>
+                  <td>{item.total}</td>
                 </tr>
               ))}
             </tbody>
@@ -70,7 +70,7 @@ function DistribusiJurusanPage() {
       </div>
 
       <div className="distribusi-barang card p-3 mt-4">
-        <h2>Distribusi Barang ke Unit Kerja</h2>
+        <h2>Distribusi Barang ke Ruangan</h2>
         <form className="p-3">
           <div className="row">
             <div className="col">

@@ -31,7 +31,7 @@ function ManajemenBarangPage() {
         title: "Success",
         text: feedback,
       });
-      // getAllTypes()
+      getAllItems()
     }
     setLoad(false);
   }
@@ -167,7 +167,7 @@ function ManajemenBarangPage() {
             onChange={onKategoriChange}
             placeholder="pilih kategori"
           >
-            <option value="1">Pilih Kategori Barang</option>
+            <option value="1" hidden>Pilih Kategori Barang</option>
             {kategori.map((k) => (
               <option key={k.id} value={k.id}>
                 {k.code} - {k.name}
