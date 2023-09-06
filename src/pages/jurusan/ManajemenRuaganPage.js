@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect } from "react";
-import { getRooms, addRoom } from "../../utils/apis";
+import { getRooms, addRoom, updateRoom } from "../../utils/apis";
 import loading from "../../images/loading.gif";
 import State from "../../hooks/State";
 
@@ -17,7 +17,7 @@ function ManajemenRuaganPage() {
     event.preventDefault();
     setLoad(true);
 
-    const { error, feedback } = await addRoom({ name });
+    const { error, feedback } = await addRoom({ name,code });
     if (error) {
       Swal.fire({
         icon: "error",
@@ -33,6 +33,49 @@ function ManajemenRuaganPage() {
       getAllRoom();
     }
     setLoad(false);
+  }
+
+  async function onUpdate(e) {
+    console.log(e.target.id)
+    const { value: formValues } = await Swal.fire({
+      title: "Ubah Unit Kerja",
+      html:
+        '<input autocomplete="off" id="swal-input1" class="swal2-input" placeholder="Code">' +
+        '<input autocomplete="off" id="swal-input2" class="swal2-input" placeholder="Nama Ruangan">',
+      focusConfirm: false,
+      preConfirm: () => {
+        return [
+          document.getElementById("swal-input1").value,
+          document.getElementById("swal-input2").value,
+        ];
+      },
+    });
+
+    if (formValues) {
+      const id = e.target.id;
+      console.log(id)
+      const code = formValues[0];
+      const name = formValues[1];
+      const { error, feedback } = await updateRoom({
+        id,
+        code,
+        name,
+      });
+      if (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error,
+        });
+      } else {
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: feedback,
+        });
+        getAllRoom()
+      }
+    }
   }
 
   const getAllRoom = useCallback(() => {
@@ -98,10 +141,10 @@ function ManajemenRuaganPage() {
               <tbody>
                 {dataTable1.map((d, i = 0) => (
                   <tr key={++i}>
-                    <th scope="row">{++i}</th>
+                    <th scope="row">{d.code}</th>
                     <td>{d.name}</td>
                     <td>
-                      <button className="btn btn-warning">Edit</button>
+                      <button id={d.code} onClick={onUpdate} className="btn btn-warning">Edit</button>
                     </td>
                   </tr>
                 ))}
@@ -121,10 +164,10 @@ function ManajemenRuaganPage() {
               <tbody>
                 {rooms.map((r, i = 0) => (
                   <tr key={++i}>
-                    <th scope="row">{++i}</th>
+                    <th scope="row">{r.code}</th>
                     <td>{r.name}</td>
                     <td>
-                      <button className="btn btn-warning">Edit</button>
+                      <button id={r.code} onClick={onUpdate} className="btn btn-warning">Edit</button>
                     </td>
                   </tr>
                 ))}

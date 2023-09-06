@@ -224,9 +224,6 @@ async function addItem({ id_type, code, name }) {
 }
 
 async function updateItem({ id, code, name }) {
-  console.log(id);
-  console.log(code);
-  console.log(name);
   const response = await fetchWithToken(`${BASE_URL}/types/nameitems/${id}`, {
     method: "PUT",
     headers: {
@@ -348,13 +345,13 @@ async function getRooms() {
   return { error: false, data: responseJson.data };
 }
 
-async function addRoom({ name }) {
+async function addRoom({ name,code }) {
   const response = await fetchWithToken(`${BASE_URL}/rooms`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ name }),
+    body: JSON.stringify({ name,code }),
   });
 
   const responseJson = await response.json();
@@ -382,6 +379,23 @@ async function getUnassignedRoom() {
   return { error: false, data: responseJson.data };
 }
 
+async function updateRoom({ id, code, name }) {
+  const response = await fetchWithToken(`${BASE_URL}/rooms/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ code, name }),
+  });
+  const responseJson = await response.json();
+
+  if (responseJson.status !== "success") {
+    return { error: responseJson.message, data: null };
+  }
+
+  return { error: false, feedback: responseJson.message };
+}
+
 export {
   getAccessToken,
   putAccessToken,
@@ -406,4 +420,5 @@ export {
   getRooms,
   addRoom,
   getUnassignedRoom,
+  updateRoom
 };

@@ -4,6 +4,7 @@ import loading from "../../images/loading.gif";
 import State from "../../hooks/State";
 
 import Swal from "sweetalert2";
+import moment from "moment";
 
 function DistribusiJurusanPage() {
   const [load, setLoad] = useState(true);
@@ -53,6 +54,7 @@ function DistribusiJurusanPage() {
               <tr>
                 <th scope="col">No</th>
                 <th scope="col">Nama Barang</th>
+                <th scope="col">Tahun</th>
                 <th scope="col">Jumlah</th>
               </tr>
             </thead>
@@ -61,6 +63,7 @@ function DistribusiJurusanPage() {
                 <tr key={++i}>
                   <th scope="row">{++i}</th>
                   <td>{item.name}</td>
+                  <td>{moment(item.date).format('YYYY')}</td>
                   <td>{item.total}</td>
                 </tr>
               ))}
