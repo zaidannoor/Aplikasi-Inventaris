@@ -337,7 +337,6 @@ async function getRooms() {
   });
 
   const responseJson = await response.json();
-  console.log(responseJson);
   if (responseJson.status !== "success") {
     return { error: responseJson.message, feedback: null };
   }
@@ -396,6 +395,22 @@ async function updateRoom({ id, code, name }) {
   return { error: false, feedback: responseJson.message };
 }
 
+async function getWorkunitInvent() {
+  const response = await fetchWithToken(`${BASE_URL}/inventories/assigned`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const responseJson = await response.json();
+
+  if (responseJson.status !== "success") {
+    return { error: responseJson.message, feedback: null };
+  }
+
+  return { error: false, data: responseJson.data };
+}
+
 export {
   getAccessToken,
   putAccessToken,
@@ -420,5 +435,6 @@ export {
   getRooms,
   addRoom,
   getUnassignedRoom,
-  updateRoom
+  updateRoom,
+  getWorkunitInvent
 };

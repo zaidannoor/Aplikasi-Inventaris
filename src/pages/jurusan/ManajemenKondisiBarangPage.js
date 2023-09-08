@@ -1,6 +1,49 @@
-import React from "react";
+import React, { useCallback, useState, useEffect } from "react";
+import { getRooms } from "../../utils/apis";
+import loading from "../../images/loading.gif";
+import State from "../../hooks/State";
+
+import Swal from "sweetalert2";
+import moment from "moment";
 
 function ManajemenKondisiBarangPage() {
+  const [load, setLoad] = useState(true);
+  const [rooms, setRoom] = useState(null); // array of object type
+  const [selectedRoom, setSelectedRoom] = State('');
+
+  const getAllRoom = useCallback(() => {
+    getRooms().then(({ data, error }) => {
+      if (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error,
+        });
+      } else {
+        setRoom(() => {
+          return data;
+        });
+        console.log(data);
+        setLoad(false);
+      }
+    });
+  }, [getRooms]);
+
+  useEffect(() => {
+    getAllRoom();
+  }, [getAllRoom]);
+
+  if (load) {
+    return (
+      <img
+        className="position-absolute top-50 start-50 translate-middle"
+        src={loading}
+        alt="loading"
+        width={200}
+      />
+    );
+  }
+
   return (
     <section className="manajemen-kondisi-barang-page p-3">
       <h1 className="text-center">Manajemen Kondisi Barang</h1>
@@ -8,10 +51,13 @@ function ManajemenKondisiBarangPage() {
       <div className="barang-list card mt-3 p-3">
         <h2 className="p-3">List Ruangan</h2>
         <div className="mx-3 p-3">
-          <select className="form-select" placeholder="pilih Ruangan">
-            <option value="1">Pilih Ruangan</option>
-            <option value="1">Ruangan 1</option>
-            <option value="1">Ruangan 2</option>
+          <select className="form-select" onChange={setSelectedRoom}>
+            <option value="" hidden>Pilih Ruangan</option>
+            {rooms.map((r, i = 0) => (
+              <option key={++i} value={r.code}>
+                {r.name}
+              </option>
+            ))}
           </select>
         </div>
 

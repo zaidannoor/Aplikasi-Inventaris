@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect } from "react";
-import { getUnassignedRoom } from "../../utils/apis";
+import { getUnassignedRoom, getRooms } from "../../utils/apis";
 import loading from "../../images/loading.gif";
 import State from "../../hooks/State";
 
@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 import moment from "moment";
 
 function DistribusiJurusanPage() {
-  const [load, setLoad] = useState(true);
+  const [load, setLoad] = useState(false);
   const [rooms, setRoom] = useState(null); // array of object type
   const [unassignedItem, setUnassignedItem] = useState(null);
 
@@ -23,7 +23,23 @@ function DistribusiJurusanPage() {
         setUnassignedItem(() => {
           return data;
         });
-        setLoad(false)
+        console.log(data)
+      }
+    });
+  }, [getUnassignedRoom]);
+
+  const getAllRoom = useCallback(() => {
+    getRooms().then(({ data, error }) => {
+      if (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error,
+        });
+      } else {
+        setRoom(() => {
+          return data;
+        });
         console.log(data)
       }
     });
@@ -31,7 +47,19 @@ function DistribusiJurusanPage() {
 
   useEffect(() => {
     getAllUnassignedItem();
-  }, [getAllUnassignedItem]);
+    getAllRoom()
+  }, [getAllUnassignedItem, getAllRoom]);
+
+  if (!(rooms && unassignedItem)) {
+    return (
+      <img
+        className="position-absolute top-50 start-50 translate-middle"
+        src={loading}
+        alt="loading"
+        width={200}
+      />
+    );
+  }
 
   if (load) {
     return (
@@ -81,6 +109,11 @@ function DistribusiJurusanPage() {
                 <option value="" hidden>
                   Pilih Barang
                 </option>
+                {
+                  unassignedItem.map((item, i=0) => (
+                    <option key={++i} value={item.id}>{item.name} - {moment(item.date).format('YYYY')}</option>
+                  ))
+                }
               </select>
             </div>
             <div className="col">
@@ -88,6 +121,11 @@ function DistribusiJurusanPage() {
                 <option value="" hidden>
                   Pilih Ruangan
                 </option>
+                {
+                  rooms.map((r, i=0) => (
+                    <option key={++i} value={r.code}>{r.name}</option>
+                  ))
+                }
               </select>
             </div>
             <div className="col">

@@ -14,6 +14,8 @@ function PendistribusianBarangPage() {
   const [unassignedItem, setUnassignedItem] = useState(null);
   const [workunits, setWorkunits] = useState(null);
 
+  const [filteredItem, setFilteredItem] = useState(null);
+
   const [id_added_item, setIdAddedItem] = State("");
   const [id_work_unit, setUnit] = State("");
   const [quantity, setQuantity] = State("");
@@ -72,7 +74,12 @@ function PendistribusianBarangPage() {
         setUnassignedItem(() => {
           return data;
         });
-        console.log(data);
+        // console.log(data);
+        const item = data.filter((d) => d.total > 0);
+        console.log(item);
+        setFilteredItem(() => {
+          return item
+        })
       }
     });
   }, [getUnassignedItem]);
@@ -121,7 +128,7 @@ function PendistribusianBarangPage() {
               </tr>
             </thead>
             <tbody>
-              {unassignedItem.map((item, i = 0) => (
+              {filteredItem.map((item, i = 0) => (
                 <tr key={++i}>
                   <th scope="row">{++i}</th>
                   <td>{item.name}</td>
@@ -144,7 +151,7 @@ function PendistribusianBarangPage() {
                 <option value="" hidden>
                   Pilih Barang
                 </option>
-                {unassignedItem.map((u, i = 0) => (
+                {filteredItem.map((u, i = 0) => (
                   <option key={++i} value={u.id}>
                     {u.name} - {moment(u.date).format("YYYY")}
                   </option>
