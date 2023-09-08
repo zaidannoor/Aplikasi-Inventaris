@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect } from "react";
-import { getUnassignedRoom, getRooms } from "../../utils/apis";
+import { getUnassignedRoom, getRooms, assignItemtoRoom } from "../../utils/apis";
 import loading from "../../images/loading.gif";
 import State from "../../hooks/State";
 
@@ -10,6 +10,38 @@ function DistribusiJurusanPage() {
   const [load, setLoad] = useState(false);
   const [rooms, setRoom] = useState(null); // array of object type
   const [unassignedItem, setUnassignedItem] = useState(null);
+
+  const [code, setCode] = State('');
+  const [id_added_item, setId] = State('');
+  const [quantity, setQuantity] = State('');
+
+  async function onSubmitHandler(event) {
+    event.preventDefault();
+    setLoad(true);
+    console.log(id_added_item)
+    console.log(code)
+    console.log(quantity)
+    const { error, feedback } = await assignItemtoRoom({
+      id_added_item,
+      code,
+      quantity,
+    });
+    if (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: error,
+      });
+    } else {
+      Swal.fire({
+        icon: "success",
+        title: "Success",
+        text: feedback,
+      });
+      getAllUnassignedItem();
+    }
+    setLoad(false);
+  }
 
   const getAllUnassignedItem = useCallback(() => {
     getUnassignedRoom().then(({ data, error }) => {
@@ -40,7 +72,6 @@ function DistribusiJurusanPage() {
         setRoom(() => {
           return data;
         });
-        console.log(data)
       }
     });
   }, [getUnassignedRoom]);
@@ -102,22 +133,22 @@ function DistribusiJurusanPage() {
 
       <div className="distribusi-barang card p-3 mt-4">
         <h2>Distribusi Barang ke Ruangan</h2>
-        <form className="p-3">
+        <form className="p-3" onSubmit={onSubmitHandler}>
           <div className="row">
             <div className="col">
-              <select className="form-select">
+              <select className="form-select" onChange={setId}>
                 <option value="" hidden>
                   Pilih Barang
                 </option>
                 {
                   unassignedItem.map((item, i=0) => (
-                    <option key={++i} value={item.id}>{item.name} - {moment(item.date).format('YYYY')}</option>
+                    <option key={++i} value={item.id_added_item}>{item.name} - {moment(item.date).format('YYYY')}</option>
                   ))
                 }
               </select>
             </div>
             <div className="col">
-              <select className="form-select">
+              <select className="form-select" onChange={setCode}>
                 <option value="" hidden>
                   Pilih Ruangan
                 </option>
@@ -133,6 +164,8 @@ function DistribusiJurusanPage() {
                 type="number"
                 className="form-control"
                 placeholder="Jumlah"
+                value={quantity}
+                onChange={setQuantity}
               />
             </div>
           </div>

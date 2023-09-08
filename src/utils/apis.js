@@ -411,6 +411,24 @@ async function getWorkunitInvent() {
   return { error: false, data: responseJson.data };
 }
 
+async function assignItemtoRoom({ id_added_item,code,quantity }) {
+  const response = await fetchWithToken(`${BASE_URL}/inventories/assign`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ id_added_item,code,quantity }),
+  });
+
+  const responseJson = await response.json();
+
+  if (responseJson.status !== "success") {
+    return { error: responseJson.message, feedback: null };
+  }
+
+  return { error: false, feedback: responseJson.message };
+}
+
 export {
   getAccessToken,
   putAccessToken,
@@ -436,5 +454,6 @@ export {
   addRoom,
   getUnassignedRoom,
   updateRoom,
-  getWorkunitInvent
+  getWorkunitInvent,
+  assignItemtoRoom
 };
