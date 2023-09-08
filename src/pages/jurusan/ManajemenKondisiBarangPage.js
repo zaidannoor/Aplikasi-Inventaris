@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect } from "react";
-import { getRooms } from "../../utils/apis";
+import { getRooms, getItemByRoom } from "../../utils/apis";
 import loading from "../../images/loading.gif";
 import State from "../../hooks/State";
 
@@ -7,9 +7,10 @@ import Swal from "sweetalert2";
 import moment from "moment";
 
 function ManajemenKondisiBarangPage() {
-  const [load, setLoad] = useState(true);
+  const [load, setLoad] = useState(false);
   const [rooms, setRoom] = useState(null); // array of object type
-  const [selectedRoom, setSelectedRoom] = State('');
+  const [items, setItem] = useState(null); // array of object type
+  const [selectedRoom, setSelectedRoom] = useState("1");
 
   const getAllRoom = useCallback(() => {
     getRooms().then(({ data, error }) => {
@@ -24,14 +25,52 @@ function ManajemenKondisiBarangPage() {
           return data;
         });
         console.log(data);
-        setLoad(false);
       }
     });
   }, [getRooms]);
 
+  const getAllItemByRoom = useCallback(
+    (code = selectedRoom) => {
+      getItemByRoom({ code_room: code }).then(({ data, error }) => {
+        if (error) {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: error,
+          });
+        } else {
+          setItem(() => {
+            return data;
+          });
+          console.log(data);
+        }
+      });
+    },
+    [getRooms]
+  );
+
+  const onRoomChange = (e) => {
+    setSelectedRoom(() => {
+      return e.target.value;
+    });
+    getAllItemByRoom(e.target.value)
+  };
+
   useEffect(() => {
     getAllRoom();
-  }, [getAllRoom]);
+    getAllItemByRoom();
+  }, [getAllRoom, getAllItemByRoom]);
+
+  if (!(rooms && items)) {
+    return (
+      <img
+        className="position-absolute top-50 start-50 translate-middle"
+        src={loading}
+        alt="loading"
+        width={200}
+      />
+    );
+  }
 
   if (load) {
     return (
@@ -51,8 +90,10 @@ function ManajemenKondisiBarangPage() {
       <div className="barang-list card mt-3 p-3">
         <h2 className="p-3">List Ruangan</h2>
         <div className="mx-3 p-3">
-          <select className="form-select" onChange={setSelectedRoom}>
-            <option value="" hidden>Pilih Ruangan</option>
+          <select className="form-select" onChange={onRoomChange}>
+            <option value="" hidden>
+              Pilih Ruangan
+            </option>
             {rooms.map((r, i = 0) => (
               <option key={++i} value={r.code}>
                 {r.name}
@@ -60,9 +101,10 @@ function ManajemenKondisiBarangPage() {
             ))}
           </select>
         </div>
-
         <div className="kategori-table d-flex justify-content-evenly mt-2">
-          <table className="table border border-black text-center">
+          {
+            items.length > 0 ? (
+              <table className="table border border-black text-center">
             <thead>
               <tr>
                 <th scope="col">No inventaris</th>
@@ -72,40 +114,23 @@ function ManajemenKondisiBarangPage() {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">220.0700.Smkmuh3.12.001.001</th>
-                <td>Meja</td>
-                <td>Baik</td>
-                <td>
-                  <button className="btn btn-warning">Edit</button>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">220.0700.Smkmuh3.12.001.002</th>
-                <td>Meja</td>
-                <td>Baik</td>
-                <td>
-                  <button className="btn btn-warning">Edit</button>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">220.0700.Smkmuh3.12.001.003</th>
-                <td>Meja</td>
-                <td>Baik</td>
-                <td>
-                  <button className="btn btn-warning">Edit</button>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">220.0700.Smkmuh3.12.001.004</th>
-                <td>Meja</td>
-                <td>Baik</td>
-                <td>
-                  <button className="btn btn-warning">Edit</button>
-                </td>
-              </tr>
+              {items.map((item) => (
+                <tr>
+                  <th scope="row">{item.codeInvent}</th>
+                  <td>{item.nameItem}</td>
+                  <td>{item.condition}</td>
+                  <td>
+                    <button className="btn btn-warning">Edit</button>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
+            ) : (
+              <h3>Belum ada barang pada ruangan ini</h3>
+            )
+
+          }
         </div>
       </div>
     </section>
