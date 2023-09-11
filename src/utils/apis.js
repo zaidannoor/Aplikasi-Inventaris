@@ -445,6 +445,24 @@ async function getItemByRoom({code_room}) {
   return { error: false, data: responseJson.data };
 }
 
+async function changeItemStatus({ id, status }) {
+  console.log(id)
+  const response = await fetchWithToken(`${BASE_URL}/inventories/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ status }),
+  });
+  const responseJson = await response.json();
+
+  if (responseJson.status !== "success") {
+    return { error: responseJson.message, data: null };
+  }
+
+  return { error: false, feedback: responseJson.message };
+}
+
 export {
   getAccessToken,
   putAccessToken,
@@ -472,5 +490,6 @@ export {
   updateRoom,
   getWorkunitInvent,
   assignItemtoRoom,
-  getItemByRoom
+  getItemByRoom,
+  changeItemStatus
 };

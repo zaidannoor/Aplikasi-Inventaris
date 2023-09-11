@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect } from "react";
-import { getRooms, getItemByRoom } from "../../utils/apis";
+import { getRooms, getItemByRoom, changeItemStatus } from "../../utils/apis";
 import loading from "../../images/loading.gif";
 import State from "../../hooks/State";
 
@@ -53,8 +53,55 @@ function ManajemenKondisiBarangPage() {
     setSelectedRoom(() => {
       return e.target.value;
     });
-    getAllItemByRoom(e.target.value)
+    getAllItemByRoom(e.target.value);
   };
+
+  async function onUpdate(e) {
+    const inputOptions = new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({
+          1: "Baik",
+          2: "Buruk",
+        });
+      }, 1000);
+    });
+
+    const { value: status } = await Swal.fire({
+      title: "Pilih Kondisi Barang",
+      input: "radio",
+      inputOptions: inputOptions,
+      inputValidator: (value) => {
+        if (!value) {
+          return "Pilih Salah Satu!";
+        }
+      },
+    });
+
+    if (status) {
+      const id = e.target.id;
+      console.log(status)
+      console.log(id);
+
+      const { error, feedback } = await changeItemStatus({
+        id,
+        status,
+      });
+      if (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error,
+        });
+      } else {
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: feedback,
+        });
+        getAllItemByRoom();
+      }
+    }
+  }
 
   useEffect(() => {
     getAllRoom();
@@ -102,35 +149,34 @@ function ManajemenKondisiBarangPage() {
           </select>
         </div>
         <div className="kategori-table d-flex justify-content-evenly mt-2">
-          {
-            items.length > 0 ? (
-              <table className="table border border-black text-center">
-            <thead>
-              <tr>
-                <th scope="col">No inventaris</th>
-                <th scope="col">Nama Barang</th>
-                <th scope="col">Kondisi</th>
-                <th scope="col">Aksi</th>
-              </tr>
-            </thead>
-            <tbody>
-              {items.map((item) => (
+          {items.length > 0 ? (
+            <table className="table border border-black text-center">
+              <thead>
                 <tr>
-                  <th scope="row">{item.codeInvent}</th>
-                  <td>{item.nameItem}</td>
-                  <td>{item.condition}</td>
-                  <td>
-                    <button className="btn btn-warning">Edit</button>
-                  </td>
+                  <th scope="col">No inventaris</th>
+                  <th scope="col">Nama Barang</th>
+                  <th scope="col">Kondisi</th>
+                  <th scope="col">Aksi</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-            ) : (
-              <h3>Belum ada barang pada ruangan ini</h3>
-            )
-
-          }
+              </thead>
+              <tbody>
+                {items.map((item) => (
+                  <tr key={item.id}>
+                    <th scope="row">{item.codeInvent}</th>
+                    <td>{item.nameItem}</td>
+                    <td>{item.condition}</td>
+                    <td>
+                      <button id={item.id} onClick={onUpdate} className="btn btn-warning">
+                        Edit
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <h3>Belum ada barang pada ruangan ini</h3>
+          )}
         </div>
       </div>
     </section>
