@@ -17,6 +17,7 @@ import RiwayatPengadaanPage from "./pages/sarpras/RiwayatPengadaanPage";
 import TotalInventarisPage from "./pages/sarpras/TotalInventarisPage";
 import ManajemenRuaganPage from "./pages/jurusan/ManajemenRuaganPage";
 import DistribusiJurusanPage from "./pages/jurusan/DistribusiJurusanPage";
+import RiwayatDistribusiPage from "./pages/sarpras/RiwayatDistribusiPage";
 import ManajemenKondisiBarangPage from "./pages/jurusan/ManajemenKondisiBarangPage";
 import InventarisJurusanPage from "./pages/jurusan/InventarisJurusanPage";
 import NotFoundPage from "./pages/NotFoundPage";
@@ -145,17 +146,10 @@ function App() {
                   element={<TotalInventarisPage />}
                 />
                 <Route
-                  path="/manajemen_ruangan"
-                  element={<ManajemenRuaganPage />}
+                  path="/riwayat_distribusi"
+                  element={<RiwayatDistribusiPage />}
                 />
-                <Route
-                  path="/manajemen_kondisi_barang"
-                  element={<ManajemenKondisiBarangPage />}
-                />
-                <Route
-                  path="/inventaris_jurusan"
-                  element={<InventarisJurusanPage />}
-                />
+
                 <Route path="*" element={<NotFoundPage logout={onLogout} />} />
               </Routes>
             ) : (

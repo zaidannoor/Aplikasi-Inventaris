@@ -329,6 +329,24 @@ async function addItemToWorkUnit({ id_added_item, id_work_unit, quantity }) {
   return { error: false, feedback: responseJson.message };
 }
 
+async function getDistributionHistory() {
+  const response = await fetchWithToken(
+    `${BASE_URL}/addeditems/distribution/history`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  const responseJson = await response.json();
+  if (responseJson.status !== "success") {
+    return { error: responseJson.message, feedback: null };
+  }
+
+  return { error: false, data: responseJson.data };
+}
+
 async function getRooms() {
   const response = await fetchWithToken(`${BASE_URL}/rooms`, {
     headers: {
@@ -344,13 +362,13 @@ async function getRooms() {
   return { error: false, data: responseJson.data };
 }
 
-async function addRoom({ name,code }) {
+async function addRoom({ name, code }) {
   const response = await fetchWithToken(`${BASE_URL}/rooms`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ name,code }),
+    body: JSON.stringify({ name, code }),
   });
 
   const responseJson = await response.json();
@@ -411,13 +429,13 @@ async function getWorkunitInvent() {
   return { error: false, data: responseJson.data };
 }
 
-async function assignItemtoRoom({ id_added_item,code,quantity }) {
+async function assignItemtoRoom({ id_added_item, code, quantity }) {
   const response = await fetchWithToken(`${BASE_URL}/inventories/assign`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ id_added_item,code,quantity }),
+    body: JSON.stringify({ id_added_item, code, quantity }),
   });
 
   const responseJson = await response.json();
@@ -429,12 +447,15 @@ async function assignItemtoRoom({ id_added_item,code,quantity }) {
   return { error: false, feedback: responseJson.message };
 }
 
-async function getItemByRoom({code_room}) {
-  const response = await fetchWithToken(`${BASE_URL}/inventories/list?code_room=${code_room}`, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+async function getItemByRoom({ code_room }) {
+  const response = await fetchWithToken(
+    `${BASE_URL}/inventories/list?code_room=${code_room}`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
 
   const responseJson = await response.json();
 
@@ -446,7 +467,7 @@ async function getItemByRoom({code_room}) {
 }
 
 async function changeItemStatus({ id, status }) {
-  console.log(id)
+  console.log(id);
   const response = await fetchWithToken(`${BASE_URL}/inventories/${id}`, {
     method: "PUT",
     headers: {
@@ -484,6 +505,7 @@ export {
   getInventories,
   getUnassignedItem,
   addItemToWorkUnit,
+  getDistributionHistory,
   getRooms,
   addRoom,
   getUnassignedRoom,
@@ -491,5 +513,5 @@ export {
   getWorkunitInvent,
   assignItemtoRoom,
   getItemByRoom,
-  changeItemStatus
+  changeItemStatus,
 };

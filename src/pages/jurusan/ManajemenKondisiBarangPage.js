@@ -24,7 +24,6 @@ function ManajemenKondisiBarangPage() {
         setRoom(() => {
           return data;
         });
-        console.log(data);
       }
     });
   }, [getRooms]);

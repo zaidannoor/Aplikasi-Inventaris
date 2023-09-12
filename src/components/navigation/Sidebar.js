@@ -87,6 +87,14 @@ function Sidebar({ auth, hidden, toggleHidden }) {
                 </Link>
               </li>
               <li className="nav-item mb-1">
+                <Link
+                  to="/riwayat_distribusi"
+                  className="nav-link text-white"
+                >
+                  Riwayat Distribusi
+                </Link>
+              </li>
+              <li className="nav-item mb-1">
                 <Link to="/total_inventaris" className="nav-link text-white">
                   Total Inventaris
                 </Link>
