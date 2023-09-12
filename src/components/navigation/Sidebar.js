@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 function Sidebar({ auth, hidden, toggleHidden }) {
@@ -44,90 +44,188 @@ function Sidebar({ auth, hidden, toggleHidden }) {
           {auth.user == "admin sarana prasarana" ? (
             <>
               <li className="nav-item mb-1">
-                <Link to="/home" className="nav-link text-white">
+                <NavLink
+                  to="/home"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "nav-link text-white active-link"
+                      : "nav-link text-white"
+                  }
+                >
                   Dashboard
-                </Link>
+                </NavLink>
               </li>
               <li className="nav-item mb-1">
-                <Link to="/manajemen_jurusan" className="nav-link text-white">
+                <NavLink
+                  to="/manajemen_jurusan"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "nav-link text-white active-link"
+                      : "nav-link text-white"
+                  }
+                >
                   Manajemen Jurusan
-                </Link>
+                </NavLink>
               </li>
               <li className="nav-item mb-1">
-                <Link to="/manajemen_akun" className="nav-link text-white">
+                <NavLink
+                  to="/manajemen_akun"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "nav-link text-white active-link"
+                      : "nav-link text-white"
+                  }
+                >
                   Manajemen Akun
-                </Link>
+                </NavLink>
               </li>
               <li className="nav-item mb-1">
-                <Link to="/manajemen_kategori" className="nav-link text-white">
+                <NavLink
+                  to="/manajemen_kategori"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "nav-link text-white active-link"
+                      : "nav-link text-white"
+                  }
+                >
                   Manajemen Kategori
-                </Link>
+                </NavLink>
               </li>
               <li className="nav-item mb-1">
-                <Link to="/manajemen_barang" className="nav-link text-white">
+                <NavLink
+                  to="/manajemen_barang"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "nav-link text-white active-link"
+                      : "nav-link text-white"
+                  }
+                >
                   Manajemen Barang
-                </Link>
+                </NavLink>
               </li>
               <li className="nav-item mb-1">
-                <Link to="/pengadaan_barang" className="nav-link text-white">
+                <NavLink
+                  to="/pengadaan_barang"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "nav-link text-white active-link"
+                      : "nav-link text-white"
+                  }
+                >
                   Pengadaan Barang
-                </Link>
+                </NavLink>
               </li>
               <li className="nav-item mb-1">
-                <Link to="/riwayat_pengadaan" className="nav-link text-white">
+                <NavLink
+                  to="/riwayat_pengadaan"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "nav-link text-white active-link"
+                      : "nav-link text-white"
+                  }
+                >
                   Riwayat Pengadaan
-                </Link>
+                </NavLink>
               </li>
               <li className="nav-item mb-1">
-                <Link
+                <NavLink
                   to="/pendistribusian_barang"
-                  className="nav-link text-white"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "nav-link text-white active-link"
+                      : "nav-link text-white"
+                  }
                 >
                   Pendistribusian Barang
-                </Link>
+                </NavLink>
               </li>
               <li className="nav-item mb-1">
-                <Link
+                <NavLink
                   to="/riwayat_distribusi"
-                  className="nav-link text-white"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "nav-link text-white active-link"
+                      : "nav-link text-white"
+                  }
                 >
                   Riwayat Distribusi
-                </Link>
+                </NavLink>
               </li>
               <li className="nav-item mb-1">
-                <Link to="/total_inventaris" className="nav-link text-white">
+                <NavLink
+                  to="/total_inventaris"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "nav-link text-white active-link"
+                      : "nav-link text-white"
+                  }
+                >
                   Total Inventaris
-                </Link>
+                </NavLink>
               </li>
             </>
           ) : (
             <>
               <li className="nav-item mb-1">
-                <Link to="/home" className="nav-link text-white">
+                <NavLink
+                  to="/home"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "nav-link text-white active-link"
+                      : "nav-link text-white"
+                  }
+                >
                   Dashboard
-                </Link>
+                </NavLink>
               </li>
               <li className="nav-item mb-1">
-                <Link to="/manajemen_ruangan" className="nav-link text-white">
+                <NavLink
+                  to="/manajemen_ruangan"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "nav-link text-white active-link"
+                      : "nav-link text-white"
+                  }
+                >
                   Manajemen Ruangan
-                </Link>
+                </NavLink>
               </li>
               <li className="nav-item mb-1">
-                <Link to="/distribusi_jurusan" className="nav-link text-white">
+                <NavLink
+                  to="/distribusi_jurusan"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "nav-link text-white active-link"
+                      : "nav-link text-white"
+                  }
+                >
                   Distribusi Barang
-                </Link>
+                </NavLink>
               </li>
               <li className="nav-item mb-1">
-                <Link to="/manajemen_kondisi_barang" className="nav-link text-white">
+                <NavLink
+                  to="/manajemen_kondisi_barang"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "nav-link text-white active-link"
+                      : "nav-link text-white"
+                  }
+                >
                   Manajemen Kondisi Barang
-                </Link>
+                </NavLink>
               </li>
               <li className="nav-item mb-1">
-                <Link to="/inventaris_jurusan" className="nav-link text-white">
+                <NavLink
+                  to="/inventaris_jurusan"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "nav-link text-white active-link"
+                      : "nav-link text-white"
+                  }
+                >
                   Inventaris Jurusan
-                </Link>
+                </NavLink>
               </li>
-              
             </>
           )}
         </ul>

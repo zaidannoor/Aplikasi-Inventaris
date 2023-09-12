@@ -68,6 +68,11 @@ footer {
     background-color: rgba(47, 169, 124, 0.1);
 }
 
+.active-link{
+    background-color: rgba(255, 255, 255, 0.5);
+    color: black !important;
+}
+
 @media only screen and (max-width: 510px) {
     .login-section {
         margin: 100px auto;
