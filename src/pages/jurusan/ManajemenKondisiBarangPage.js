@@ -78,8 +78,6 @@ function ManajemenKondisiBarangPage() {
 
     if (status) {
       const id = e.target.id;
-      console.log(status)
-      console.log(id);
 
       const { error, feedback } = await changeItemStatus({
         id,
@@ -97,7 +95,7 @@ function ManajemenKondisiBarangPage() {
           title: "Success",
           text: feedback,
         });
-        getAllItemByRoom();
+        getAllItemByRoom(selectedRoom);
       }
     }
   }

@@ -467,7 +467,6 @@ async function getItemByRoom({ code_room }) {
 }
 
 async function changeItemStatus({ id, status }) {
-  console.log(id);
   const response = await fetchWithToken(`${BASE_URL}/inventories/${id}`, {
     method: "PUT",
     headers: {
