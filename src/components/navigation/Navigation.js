@@ -23,10 +23,10 @@ function Navigation({ hidden, toggleHidden, logout }) {
           </button>
         )}
       </div>
-      <div>
+      <div onClick={logout}>
         <button className="btn btn-danger">
           <FaPowerOff
-            onClick={logout}
+            
             style={{ minWidth: "30px", minHeight: "30px" }}
           />
         </button>

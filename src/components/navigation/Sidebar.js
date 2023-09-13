@@ -216,6 +216,18 @@ function Sidebar({ auth, hidden, toggleHidden }) {
               </li>
               <li className="nav-item mb-1">
                 <NavLink
+                  to="/inventaris_ruangan"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "nav-link text-white active-link"
+                      : "nav-link text-white"
+                  }
+                >
+                  Inventaris Ruangan
+                </NavLink>
+              </li>
+              <li className="nav-item mb-1">
+                <NavLink
                   to="/inventaris_jurusan"
                   className={({ isActive }) =>
                     isActive

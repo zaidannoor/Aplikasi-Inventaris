@@ -126,7 +126,7 @@ function ManajemenKategoriPage() {
             <table className="table border border-black text-center">
               <thead>
                 <tr>
-                  <th scope="col">Kode Barang</th>
+                  <th scope="col">Kode Kategori</th>
                   <th scope="col">Kategori</th>
                   <th scope="col">Aksi</th>
                 </tr>

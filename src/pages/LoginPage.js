@@ -27,7 +27,7 @@ function LoginPage({ loginSuccess }) {
       });
     } else {
       await loginSuccess(data);
-      navigate("/");
+      navigate("/home");
     }
   }
 

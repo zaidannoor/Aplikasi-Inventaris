@@ -63,12 +63,13 @@ footer {
 .manajemen-ruangan-page,
 .manajemen-kondisi-barang-page,
 .inventaris-jurusan-page,
-.riwayat-distribusi-page {
+.riwayat-distribusi-page,
+.inventaris-ruangan-page {
     padding: 20px;
     background-color: rgba(47, 169, 124, 0.1);
 }
 
-.active-link{
+.active-link {
     background-color: rgba(255, 255, 255, 0.5);
     color: black !important;
 }

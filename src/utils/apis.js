@@ -466,6 +466,25 @@ async function getItemByRoom({ code_room }) {
   return { error: false, data: responseJson.data };
 }
 
+async function getTotalItemByRoom({ code_room }) {
+  const response = await fetchWithToken(
+    `${BASE_URL}/inventories/assigned?code_room=${code_room}`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  const responseJson = await response.json();
+
+  if (responseJson.status !== "success") {
+    return { error: responseJson.message, feedback: null };
+  }
+
+  return { error: false, data: responseJson.data };
+}
+
 async function changeItemStatus({ id, status }) {
   const response = await fetchWithToken(`${BASE_URL}/inventories/${id}`, {
     method: "PUT",
@@ -513,4 +532,5 @@ export {
   assignItemtoRoom,
   getItemByRoom,
   changeItemStatus,
+  getTotalItemByRoom
 };
