@@ -1,12 +1,15 @@
 import React, { useCallback, useState, useEffect } from "react";
 import { getRooms, getTotalItemByRoom } from "../../utils/apis";
 import loading from "../../images/loading.gif";
-
+import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
+import TableData from "../../components/download/TableData";
 import Swal from "sweetalert2";
 import moment from "moment";
 
 function InventarisRuanganPage() {
   const [load, setLoad] = useState(false);
+  const [title, setTitle] = useState(null);
+  const [place, setPlace] = useState("Ruangan");
   const [rooms, setRoom] = useState(null); // array of object type
   const [items, setItem] = useState(null); // array of object type
   const [selectedRoom, setSelectedRoom] = useState("0");
@@ -23,7 +26,6 @@ function InventarisRuanganPage() {
         setRoom(() => {
           return data;
         });
-        console.log(data);
       }
     });
   }, [getRooms]);
@@ -41,7 +43,6 @@ function InventarisRuanganPage() {
           setItem(() => {
             return data;
           });
-          console.log(data);
         }
       });
     },
@@ -52,6 +53,14 @@ function InventarisRuanganPage() {
     setSelectedRoom(() => {
       return e.target.value;
     });
+
+    const index = e.target.selectedIndex;
+    const el = e.target.childNodes[index];
+    const option = el.getAttribute("id");
+    setTitle(() => {
+      return option;
+    });
+
     getTotalItemRoom(e.target.value);
   };
 
@@ -93,39 +102,60 @@ function InventarisRuanganPage() {
               Pilih Ruangan
             </option>
             {rooms.map((r, i = 0) => (
-              <option key={++i} value={r.code}>
+              <option key={++i} id={r.name} value={r.code}>
                 {r.name}
               </option>
             ))}
           </select>
         </div>
 
-        <div className="kategori-table d-flex justify-content-evenly mt-2">
+        <div className="kategori-table mt-2">
           {items.length > 0 ? (
-            <table className="table border border-black text-center">
-              <thead>
-                <tr>
-                  <th scope="col">No</th>
-                  <th scope="col">Nama Barang</th>
-                  <th scope="col">Baik</th>
-                  <th scope="col">Rusak</th>
-                  <th scope="col">Jumlah</th>
-                  <th scope="col">Tahun</th>
-                </tr>
-              </thead>
-              <tbody>
-                {items.map((item, i) => (
-                  <tr key={++i}>
-                    <th scope="row">{++i}</th>
-                    <td>{item.name}</td>
-                    <td>{item.baik}</td>
-                    <td>{item.buruk}</td>
-                    <td>{item.total}</td>
-                    <td>{moment(item.date).format("YYYY")}</td>
+            <>
+              <div className="d-flex justify-content-end mb-3">
+                <PDFDownloadLink
+                  document={
+                    <TableData items={items} place={place} title={title} />
+                  }
+                  fileName={"Laporan Ruangan " + title}
+                >
+                  {({ loading }) =>
+                    loading ? (
+                      <button className="btn btn-warning">
+                        Loading Document
+                      </button>
+                    ) : (
+                      <button className="btn btn-primary">Download PDF</button>
+                    )
+                  }
+                </PDFDownloadLink>
+              </div>
+
+              <table className="table border border-black text-center">
+                <thead>
+                  <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Nama Barang</th>
+                    <th scope="col">Baik</th>
+                    <th scope="col">Rusak</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Tahun</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {items.map((item, i) => (
+                    <tr key={++i}>
+                      <th scope="row">{++i}</th>
+                      <td>{item.name}</td>
+                      <td>{item.baik}</td>
+                      <td>{item.buruk}</td>
+                      <td>{item.total}</td>
+                      <td>{moment(item.date).format("YYYY")}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </>
           ) : (
             <h3>Belum ada barang pada ruangan ini</h3>
           )}
