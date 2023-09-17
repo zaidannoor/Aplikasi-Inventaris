@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import logo from "../../images/logo.png";
+
 
 function Sidebar({ auth, hidden, toggleHidden }) {
   return (
-    <section className="sidebar" style={{ height: "100%" }}>
+    <section className="sidebar" >
       <div
         className={
           hidden
@@ -18,9 +20,10 @@ function Sidebar({ auth, hidden, toggleHidden }) {
           backgroundColor: "#2fa97c",
         }}
       >
+        
         <div
           onClick={toggleHidden}
-          className="justify-content-end btn-side d-none"
+          className="justify-content-end btn-side d-none mb-2"
         >
           {hidden ? (
             <button className="btn">
@@ -36,6 +39,7 @@ function Sidebar({ auth, hidden, toggleHidden }) {
             </button>
           )}
         </div>
+        <img src={logo} className="logo" alt="SMK Muhamadiyah 3 Yogyakarta" />
         <hr></hr>
         <ul
           className="nav nav-pills flex-column mb-auto"
