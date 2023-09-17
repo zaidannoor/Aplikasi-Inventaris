@@ -1,2 +1,4 @@
 runtime: nodejs16
 service: invent-app
+env: flex
+instance_class: F2
